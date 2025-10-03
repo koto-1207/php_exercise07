@@ -2,11 +2,17 @@
 
 $score = '';
 $err_msg = '';
+$msg = '点数を入力してください';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $score = $_POST['score'];
-    if (empty($score)) {
-        $err_msg = '点数が入力されていません。';
+
+    if ($score === '') {
+        $err_msg = '点数が入力されていません';
+    } elseif ($score >= 60) {
+        $msg = '合格です';
+    } else {
+        $msg = '不合格です';
     }
 }
 ?>
@@ -21,20 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php if ($_SERVER['REQUEST_METHOD'] !== 'POST' || $err_msg): ?>
-        <h1>点数を入力して下さい</h1>
-    <?php endif; ?>
+    <h1><?= "{$msg}"; ?></h1>
 
     <?php if ($err_msg): ?>
         <ul>
-            <li><?php echo $err_msg; ?></li>
+            <li><?php echo htmlspecialchars($err_msg, ENT_QUOTES, 'UTF-8'); ?></li>
         </ul>
-    <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $score !== ''): ?>
-        <?php if ($score >= 60): ?>
-            <h2>合格です</h2>
-        <?php else: ?>
-            <h2>不合格です</h2>
-        <?php endif; ?>
     <?php endif; ?>
 
     <form action="" method="post">

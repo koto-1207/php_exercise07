@@ -8,10 +8,10 @@ $err_msgs = [];
 $items = ['バッグ', '靴', '時計', 'ネックレス', 'ピアス'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'] ?? '';
-    $tel = $_POST['tel'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $item_key = $_POST['item_key'] ?? '';
+    $name = filter_input(INPUT_POST, 'name');
+    $tel = filter_input(INPUT_POST, 'tel');
+    $email = filter_input(INPUT_POST, 'email');
+    $item_key = filter_input(INPUT_POST, 'item_key');
 
     // バリデーション 
     if (empty($name)) {
